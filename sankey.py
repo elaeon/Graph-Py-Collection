@@ -1,6 +1,7 @@
 import networkx as nx
 import json
 
+#This class generate a sankey json format for the d3 sankey plugin
 class Sankey(object):
     def __init__(self, universe=None):
         self.universe = universe
@@ -138,3 +139,51 @@ class Sankey(object):
         result = self.json_sankey(n_nodes, n_links)
         with open(name, "w") as f:
             f.write(json.dumps(result))
+
+#### USE EXAMPLE
+#def firma_molecular_graph(fm):
+#    data = []
+#    for i, row in fm.iterrows():
+#        data.append({
+#            "source": row["fm"], 
+#            "target": row["fm_gene"], 
+#            "value": 1})
+#    return data
+
+#def signature_graph(genes):
+#    data = []
+#    for i, row in genes.iterrows():
+#        data.append({
+#            "source": row["gene"], 
+#            "target": str(abs(row["value"])), 
+#            "value": 1})
+#    return data
+    
+#def generate_sankey_json():
+#    from sankey import Sankey
+#    import pandas as pd
+
+#    df = pd.read_csv(filepath_or_buffer="rdb_sankeys/lumb_rdb_regulon.sif", sep='\t')
+#    df_signature = pd.read_csv(filepath_or_buffer="rdb_sankeys/lumb_rdb_signature.txt", sep='\t')
+#    base = df[df["fm"].isin(df["fm_gene"])]
+
+#    universe1 = set((r["fm"] for i, r in base.iterrows()))
+#    universe2 = set(r["gene"] for i, r in df_signature.iterrows())
+#    universe3 = set(str(abs(r["value"])) for i, r in df_signature.iterrows())
+#    universe1_1 = set((r["fm_gene"] for i, r in base.iterrows()))
+
+#    sankey = Sankey()
+#    sankey.add_universe(universe1)
+#    sankey.add_universe(universe2)
+#    sankey.add_universe(universe3)
+#    sankey.add_universe(universe1_1)
+
+#    sankey.add_pipeline(firma_molecular_graph(base))
+#    sankey.add_pipeline(signature_graph(df_signature))
+    
+#    last = set([sankey.universe_index[e] for e in universe3])
+#    def only_paths_of_size(paths, length=3):
+#        return [edges for edges in paths if edges[-1] in last and len(edges) == length]
+
+#    paths = sankey.paths(base["fm"], only_paths_of_size)
+#    sankey.json(paths, name="sankey.json")
