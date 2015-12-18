@@ -70,7 +70,6 @@ class Sankey(object):
         base_universe = set((self.universe_index[r] for r in base))
         linked = []
         uv_count = {}
-        count = 0
         for source in base_universe:
             shorted = nx.shortest_path(self.G, source=source)
             paths = only_paths_of_size(shorted.values())
@@ -84,10 +83,6 @@ class Sankey(object):
                             "value": None})
                         uv_count[key] = 0
                     uv_count[key] += 1
-            if count == 100:
-                break
-            count += 1
-            print(count)
 
         for link in linked:
             u = link["source"]
